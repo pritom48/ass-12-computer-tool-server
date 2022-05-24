@@ -20,6 +20,7 @@ async function run() {
     try {
         await client.connect();
         const toolCollection = client.db('computer-tools').collection('tools')
+        const reviewCollection = client.db('computer-tools').collection('reviews')
 
         app.get('/tool', async (req, res) => {
             const query = {};
@@ -33,6 +34,13 @@ async function run() {
             const query = { _id: ObjectId(id) }
             const tool = await toolCollection.findOne(query)
             res.send(tool)
+        })
+
+        app.get('/review', async (req, res) => {
+            const query = {};
+            const cursor = reviewCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews)
         })
 
     }
