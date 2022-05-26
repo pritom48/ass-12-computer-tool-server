@@ -48,6 +48,12 @@ async function run() {
             res.send(tools)
         })
 
+        app.post('/tool', async (req, res) => {
+            const newProduct = req.body;
+            const result = await toolCollection.insertOne(newProduct);
+            res.send(result)
+        })
+
         app.get('/tool/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
